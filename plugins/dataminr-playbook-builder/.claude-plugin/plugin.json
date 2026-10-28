@@ -1,0 +1,8 @@
+{
+  "name": "dataminr-playbook-builder",
+  "version": "0.1.2",
+  "description": "Build, update, push and live-test ThreatConnect/TIP Playbooks by editing their JSON definition, with backups and revert.",
+  "license": "Apache-2.0",
+  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
+  "keywords": ["threatconnect","playbooks"]
+}

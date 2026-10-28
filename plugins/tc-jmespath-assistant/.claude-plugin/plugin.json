@@ -1,0 +1,8 @@
+{
+  "name": "tc-jmespath-assistant",
+  "version": "0.1.0",
+  "description": "JMESPath assistant scoped to ThreatConnect Playbooks, including TC custom functions.",
+  "license": "Apache-2.0",
+  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
+  "keywords": ["threatconnect","playbooks","jmespath"]
+}

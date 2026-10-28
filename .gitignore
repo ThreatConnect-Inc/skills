@@ -1,0 +1,12 @@
+.DS_Store
+.env
+.env_*
+*.bak
+skill-backups/
+*.skill
+*.tgz
+__pycache__/
+*.pyc
+.claude/settings.local.json
+docs/show-and-tell/
+.leak-patterns

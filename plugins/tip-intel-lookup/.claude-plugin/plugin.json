@@ -1,0 +1,8 @@
+{
+  "name": "tip-intel-lookup",
+  "version": "0.1.1",
+  "description": "Natural-language lookup and reporting over a Dataminr/ThreatConnect TIP via the ThreatConnect MCP server: CVEs, actors, malware, campaigns, IOCs, triage, industry/country scans.",
+  "license": "Apache-2.0",
+  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
+  "keywords": ["threatconnect","cti","tql","mcp"]
+}
