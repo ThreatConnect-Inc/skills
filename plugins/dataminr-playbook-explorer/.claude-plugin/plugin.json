@@ -1,8 +1,0 @@
-{
-  "name": "dataminr-playbook-explorer",
-  "version": "0.1.2",
-  "description": "Retrieve, explain, audit and diff ThreatConnect/TIP Playbooks against confirmed best practices.",
-  "license": "Apache-2.0",
-  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
-  "keywords": ["threatconnect","playbooks","audit"]
-}

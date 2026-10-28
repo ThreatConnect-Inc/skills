@@ -3,7 +3,7 @@ name: dataminr-playbook-builder
 description: Builds, updates, and live-tests ThreatConnect/TIP Playbooks from an LLM by editing the playbook's JSON definition, pushing it back to the instance (with user confirmation, local backups, a change log, and easy revert), then activating it and calling its webhook to validate the output. Use whenever the user wants to create, modify, update, tweak, fix, test, or revert a ThreatConnect playbook (e.g. change an agent's system prompt, edit a TQL query, adjust model settings, add or rewire jobs, "try it and see what it returns") — even if they don't name this skill. Pairs with dataminr-playbook-explorer for reading, validating, and explaining the playbook before and after changes.
 ---
 
-<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbook-builder/skills/dataminr-playbook-builder/ . Edit only this file; ~/.claude/skills/dataminr-playbook-builder is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
+<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbooks/skills/dataminr-playbook-builder/ . Edit only this file; ~/.claude/skills/dataminr-playbook-builder is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
 
 # TC Playbook Builder
 

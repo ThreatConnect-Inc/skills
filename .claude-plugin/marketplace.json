@@ -5,33 +5,18 @@
     "email": "emmet.wray@dataminr.com"
   },
   "metadata": {
-    "description": "Dataminr CTI and ThreatConnect skills: TIP lookup, playbook tooling, report style."
+    "description": "Dataminr CTI and ThreatConnect skills: TIP lookup and playbook tooling."
   },
   "plugins": [
     {
-      "name": "tip-intel-lookup",
-      "source": "./plugins/tip-intel-lookup",
-      "description": "Natural-language lookup and reporting over a Dataminr/ThreatConnect TIP via MCP."
+      "name": "dataminr-cti",
+      "source": "./plugins/dataminr-cti",
+      "description": "CTI skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting."
     },
     {
-      "name": "tc-jmespath-assistant",
-      "source": "./plugins/tc-jmespath-assistant",
-      "description": "JMESPath assistant scoped to ThreatConnect Playbooks."
-    },
-    {
-      "name": "dataminr-playbook-builder",
-      "source": "./plugins/dataminr-playbook-builder",
-      "description": "Build, push and live-test ThreatConnect Playbooks with backups and revert."
-    },
-    {
-      "name": "dataminr-playbook-explorer",
-      "source": "./plugins/dataminr-playbook-explorer",
-      "description": "Retrieve, explain, audit and diff ThreatConnect Playbooks."
-    },
-    {
-      "name": "dataminr-playbook-qa",
-      "source": "./plugins/dataminr-playbook-qa",
-      "description": "QA and test agent-based playbooks across every trigger pathway."
+      "name": "dataminr-playbooks",
+      "source": "./plugins/dataminr-playbooks",
+      "description": "Build, explore, test and QA ThreatConnect Playbooks and agents, plus JMESPath help."
     }
   ]
 }

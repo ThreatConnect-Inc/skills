@@ -109,8 +109,8 @@ for d in dirs:
         warn(f"VERSIONS.md: no changelog heading '### {d} {ver}'")
 
     skill_dirs = [s for s in glob.glob(f"{base}/skills/*") if os.path.isdir(s)]
-    if d not in [os.path.basename(s) for s in skill_dirs]:
-        err(f"{base}: expected a skill directory skills/{d}/")
+    if not skill_dirs:
+        err(f"{base}: no skills found under skills/")
     for s in skill_dirs:
         sname = os.path.basename(s)
         sk = f"{s}/SKILL.md"
@@ -127,8 +127,6 @@ for d in dirs:
         else:
             if name != sname:
                 err(f"{sk}: name '{name}' does not match directory '{sname}'")
-            if sname != d:
-                err(f"{sk}: skill directory '{sname}' does not match plugin '{d}'")
             if not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", name) or len(name) > 64:
                 err(f"{sk}: name '{name}' must be lowercase a-z0-9 with single hyphens, at most 64 chars")
         desc = fm.get("description", "")

@@ -3,7 +3,7 @@ name: "dataminr-playbook-qa"
 description: "QA and test agent-based playbooks in the Dataminr/ThreatConnect TIP: generate test cases for an agent, run them via Ask AI chat, the Report AI page (report agents: per-format/data-selection test matrix), a webhook/API trigger, a native event trigger (mutate an object, read the result back), a local/direct-API pre-check with no live run at all, or trigger-payload and regression tests that need no browser — score results, and produce a findings report. Generic across engineers and instances; pairs with dataminr-playbook-builder/dataminr-playbook-explorer for anything that needs editing or reading a playbook's definition."
 ---
 
-<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbook-qa/skills/dataminr-playbook-qa/ . Edit only this file; ~/.claude/skills/dataminr-playbook-qa is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
+<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbooks/skills/dataminr-playbook-qa/ . Edit only this file; ~/.claude/skills/dataminr-playbook-qa is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
 
 # TIP Agent QA
 

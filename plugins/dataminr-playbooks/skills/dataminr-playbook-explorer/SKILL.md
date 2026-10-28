@@ -3,7 +3,7 @@ name: dataminr-playbook-explorer
 description: Retrieves, explains, and audits ThreatConnect/TIP Playbooks given a playbook id, groupXid, or name. Resolves the id (v3 API lookup), downloads the full job definition (v2 API — v3 cannot return a single playbook's full definition), and produces a structured summary of the trigger, the job graph, which apps are used (LLM/agent prompts, TQL, JMESPath, Template Builder/FTL, branches, loops, Cache Store), and the TQL/JMESPath patterns in use. Also reviews a playbook against a growing checklist of confirmed best practices (JSON robustness, TQL hygiene, FTL null-safety, architecture) and flags what's missing or worth improving, with concrete fixes. Can also diff/compare two playbooks to produce a migration list. Use this whenever the user gives a playbook id/xid/name and asks to pull down, look at, review, audit, download, debug, understand, compare, migrate changes between, or improve a ThreatConnect playbook, or asks what's missing or could be better about one — even without naming this skill or "ThreatConnect."
 ---
 
-<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbook-explorer/skills/dataminr-playbook-explorer/ . Edit only this file; ~/.claude/skills/dataminr-playbook-explorer is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
+<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbooks/skills/dataminr-playbook-explorer/ . Edit only this file; ~/.claude/skills/dataminr-playbook-explorer is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
 
 # TC Playbook Explorer
 

@@ -10,14 +10,17 @@ if [ -e "$dest" ] && [ -n "$(ls -A "$dest")" ]; then echo "ERROR: $dest exists a
 mkdir -p "$dest"
 rsync -a --exclude .git --exclude .DS_Store --exclude docs --exclude CLAUDE.md --exclude .leak-patterns --exclude .public-exclude \
   --exclude skill-backups --exclude __pycache__ --exclude '.env*' --exclude .claude "$repo/" "$dest/"
-# Drop plugins listed in .public-exclude from the export: directory, marketplace entry, README row, VERSIONS rows.
+# Drop plugins or skills listed in .public-exclude from the export: directory, marketplace entry, README and VERSIONS rows.
 if [ -f "$repo/.public-exclude" ]; then
   python3 - "$dest" "$repo/.public-exclude" <<'PY'
 import json, re, shutil, sys
 dest, listfile = sys.argv[1], sys.argv[2]
 names = [l.strip() for l in open(listfile) if l.strip() and not l.startswith("#")]
+import glob
 for n in names:
     shutil.rmtree(f"{dest}/plugins/{n}", ignore_errors=True)
+    for d in glob.glob(f"{dest}/plugins/*/skills/{n}"):
+        shutil.rmtree(d, ignore_errors=True)
 mp = f"{dest}/.claude-plugin/marketplace.json"
 d = json.load(open(mp)); d["plugins"] = [p for p in d["plugins"] if p["name"] not in names]
 open(mp, "w").write(json.dumps(d, indent=2) + "\n")
