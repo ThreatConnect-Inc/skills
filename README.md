@@ -22,6 +22,7 @@ The playbook skills name each other, so Claude hands off between them in one con
 
 - Claude Code (or claude.ai for skills that work in chat; `scripts/build-chat-zips.sh` builds upload zips).
 - Access to a ThreatConnect/TIP instance, with an API key or the ThreatConnect MCP connector. Keep keys in local files such as `.env_<instance>` outside this repo; never commit them.
+- Claude Browser Plugin installed and linked (used for UI testing)
 
 Playbook skills can change a live instance. They ask for confirmation, back up before a push and can revert, but try them on a test instance first.
 
