@@ -1,8 +1,20 @@
 {
   "name": "playbooks",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Build, explore, test and QA ThreatConnect/TIP Playbooks and agents with Claude, plus JMESPath help for playbook transforms.",
   "license": "Apache-2.0",
-  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
-  "keywords": ["threatconnect","playbooks","agents","jmespath","qa"]
+  "author": {
+    "name": "Emmet Wray",
+    "email": "emmet.wray@dataminr.com"
+  },
+  "keywords": [
+    "threatconnect",
+    "playbooks",
+    "agents",
+    "jmespath",
+    "qa",
+    "dataminr",
+    "cyber",
+    "threat intelligence"
+  ]
 }

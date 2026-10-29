@@ -28,7 +28,7 @@ Fetching/reading uses `playbook-explorer`'s `scripts/fetch_playbook.sh`. Details
 ## Step 1 — Connect to the right instance
 
 - **Direct API (default, instance-explicit).** Needs a base URL and a `TC_KEY` env file. Env files are per instance (`.env_instanceA`, `.env_instanceB`, `.env_instanceC`...) and contain only `TC_KEY` — not the URL. Look in the project or the working directory the user names; never fabricate or reuse a key from another instance. If the URL isn't given, ask the user for it; do not guess an instance.
-- **MCP (`mcp__threatconnect__*`) is discovery-only for playbooks.** It is bound to one instance (no per-call override), lists playbooks as read-only, `tc_list` returns metadata only, and `tc_get` on a playbook returns 405. Use it to browse; do all full reads and all writes via direct API.
+- **MCP (`mcp__threatconnect__*` or `mcp__plugin_cti_dataminr-atip__*`) is discovery-only for playbooks.** It is bound to one instance (no per-call override), lists playbooks as read-only, `tc_list` returns metadata only, and `tc_get` on a playbook returns 405. Use it to browse; do all full reads and all writes via direct API.
 - Never print `TC_KEY`; redact when showing env contents.
 
 ## Step 2 — Find and confirm the playbook

@@ -22,7 +22,7 @@ Any time the user:
 2. **A credential.** Look for a `.env` file (commonly in the project root) containing `TC_KEY=...`. If none exists, ask the user for one rather than guessing — never fabricate or reuse a credential from a different instance.
 3. **The identifier** — numeric id, groupXid, or a name/partial name to search by.
 
-If the session also has `mcp__threatconnect__*` MCP tools available, **do not assume they point at the same instance** as the one holding the playbook you want — see the MCP instance-mismatch note in `references/gotchas.md`. This skill's direct-API approach is instance-explicit by design; use it whenever the target instance isn't confirmed to match whatever the MCP tools are connected to.
+If the session also has `mcp__threatconnect__*` or `mcp__plugin_cti_dataminr-atip__*` MCP tools available, **do not assume they point at the same instance** as the one holding the playbook you want — see the MCP instance-mismatch note in `references/gotchas.md`. This skill's direct-API approach is instance-explicit by design; use it whenever the target instance isn't confirmed to match whatever the MCP tools are connected to.
 
 **A project can have several instance-specific credential files** (e.g. `.env_instanceA`, `.env_instanceB`, `.env_instanceC`, alongside a bare `.env`) and/or several similarly-named playbooks across different instances — check for this rather than assuming one `.env`/one playbook xid is "the" target for a loosely-named reference like "the POC version." If a re-fetch ever shows no expected changes after work was supposedly done, that's a signal to stop and re-confirm the exact xid and instance rather than assuming continuity with an earlier fetch in the same session — see `references/gotchas.md`.
 

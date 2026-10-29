@@ -8,22 +8,30 @@ Release pass: bump `plugin.json`, update the plugin row and the rows of the skil
 
 | Plugin | Version | Last updated |
 |---|---|---|
-| `cti` | 0.3.0 | 2026-10-29 |
-| `playbooks` | 0.3.0 | 2026-10-29 |
+| `cti` | 0.4.0 | 2026-10-29 |
+| `playbooks` | 0.3.1 | 2026-10-29 |
 
 ## Skills
 
 | Skill | Version | Last updated | Plugin |
 |---|---|---|---|
-| `intel-lookup` | 0.1.1 | 2026-10-29 | `cti` |
-| `playbook-builder` | 0.1.2 | 2026-10-29 | `playbooks` |
-| `playbook-explorer` | 0.1.2 | 2026-10-29 | `playbooks` |
+| `intel-lookup` | 0.1.2 | 2026-10-29 | `cti` |
+| `playbook-builder` | 0.1.3 | 2026-10-29 | `playbooks` |
+| `playbook-explorer` | 0.1.3 | 2026-10-29 | `playbooks` |
 | `playbook-qa` | 1.3.1 | 2026-10-29 | `playbooks` |
 | `jmespath-assistant` | 0.1.0 | 2026-10-29 | `playbooks` |
 
 ## Changelog
 
 Newest first.
+
+### cti 0.4.0 — 2026-10-29
+- The bundled MCP server is now named `dataminr-atip` (was `threatconnect`), shown as Dataminr ATIP. Its tools are now `mcp__plugin_cti_dataminr-atip__*`; update any saved permissions or references to the old prefix.
+- Added search keywords: dataminr, cyber, threat intelligence.
+
+### playbooks 0.3.1 — 2026-10-29
+- Added search keywords: dataminr, cyber, threat intelligence.
+- The builder and explorer skills mention the plugin's MCP tool prefix alongside the hand-added one.
 
 ### playbooks 0.3.0 — 2026-10-29
 - Renamed for clarity. Skills are now `playbook-builder`, `playbook-explorer`, `playbook-qa` and `jmespath-assistant` (were `dataminr-playbook-*` and `tc-jmespath-assistant`); the plugin is `playbooks` (was `dataminr-playbooks`). Install it as `playbooks@dataminr`.

@@ -11,12 +11,28 @@
     {
       "name": "cti",
       "source": "./plugins/cti",
-      "description": "CTI skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting."
+      "description": "CTI skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting.",
+      "keywords": [
+        "dataminr",
+        "cyber",
+        "threat intelligence",
+        "threatconnect",
+        "cti",
+        "tip"
+      ]
     },
     {
       "name": "playbooks",
       "source": "./plugins/playbooks",
-      "description": "Build, explore, test and QA ThreatConnect Playbooks and agents, plus JMESPath help."
+      "description": "Build, explore, test and QA ThreatConnect Playbooks and agents, plus JMESPath help.",
+      "keywords": [
+        "dataminr",
+        "cyber",
+        "threat intelligence",
+        "threatconnect",
+        "playbooks",
+        "agents"
+      ]
     }
   ]
 }

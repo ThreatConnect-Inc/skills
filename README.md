@@ -11,7 +11,7 @@ Skills are grouped into plugins by topic. Install a plugin to get all of its ski
 
 | Skill | Plugin | What it does |
 |---|---|---|
-| `intel-lookup` | `cti` | Natural-language lookup and reporting over a TIP via the ThreatConnect MCP server or API |
+| `intel-lookup` | `cti` | Natural-language lookup and reporting over a TIP via the Dataminr ATIP MCP server or API |
 | `playbook-builder` | `playbooks` | Build, push and live-test Playbooks from their JSON definition |
 | `playbook-explorer` | `playbooks` | Retrieve, explain, audit and diff Playbooks |
 | `playbook-qa` | `playbooks` | QA agent-based playbooks across every trigger pathway |
@@ -22,7 +22,7 @@ The playbook skills name each other, so Claude hands off between them in one con
 ## Requirements
 
 - Claude Code (or claude.ai for skills that work in chat; `scripts/build-chat-zips.sh` builds upload zips).
-- Access to a ThreatConnect/TIP instance, with an API key or the ThreatConnect MCP connector. Keep keys in local files such as `.env_<instance>` outside this repo; never commit them.
+- Access to a ThreatConnect/TIP instance, with an API key or the Dataminr ATIP MCP connector. Keep keys in local files such as `.env_<instance>` outside this repo; never commit them.
 - Claude Browser Plugin installed and linked (used for UI testing)
 
 Playbook skills can change a live instance. They ask for confirmation, back up before a push and can revert, but try them on a test instance first.

@@ -9,7 +9,7 @@ Retrieves and synthesizes threat intelligence from a ThreatConnect/Agentic TIP i
 
 ## Before anything else: which access path is available?
 
-Check the current tool list for `tc_resources` / `tc_list` / `tc_describe` / `tc_get` / `tc_create` / `tc_update` / `tc_delete` (named `mcp__threatconnect__*` when added by hand, or `mcp__plugin_cti_threatconnect__*` when it comes from the `cti` plugin; load via tool_search if deferred).
+Check the current tool list for `tc_resources` / `tc_list` / `tc_describe` / `tc_get` / `tc_create` / `tc_update` / `tc_delete` (named `mcp__threatconnect__*` when added by hand, or `mcp__plugin_cti_dataminr-atip__*` when it comes from the `cti` plugin; load via tool_search if deferred).
 
 **This skill currently operates MCP-only.** Direct API access (`reference/direct_api_fallback.md`) is documented for a future release but not currently wired into any workflow below — the security tradeoff of passing a raw API token through chat wasn't one the customer wanted to accept yet, and there's no secure channel in this environment to supply it otherwise (unlike MCP, where the token exchange happens outside the model's context entirely).
 

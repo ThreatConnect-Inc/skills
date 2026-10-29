@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "threatconnect": {
+    "dataminr-atip": {
       "type": "http",
       "url": "https://${user_config.tip_host}/api/v3/mcp",
       "headers": {

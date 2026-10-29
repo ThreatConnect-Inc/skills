@@ -1,6 +1,6 @@
 {
   "name": "cti",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Cyber threat intelligence skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting over CVEs, actors, malware, campaigns and IOCs.",
   "license": "Apache-2.0",
   "author": {
@@ -11,19 +11,22 @@
     "threatconnect",
     "cti",
     "threat-intelligence",
-    "tip"
+    "tip",
+    "dataminr",
+    "cyber",
+    "threat intelligence"
   ],
   "userConfig": {
     "tip_host": {
       "type": "string",
-      "title": "TIP instance hostname",
-      "description": "Hostname of your Agentic TIP instance, without https:// or a trailing slash (for example yourinstance.threatconnect.com).",
+      "title": "Dataminr ATIP instance hostname",
+      "description": "Hostname of your Dataminr ATIP (Agentic TIP) instance, without https:// or a trailing slash (for example yourinstance.threatconnect.com).",
       "required": true
     },
     "tip_api_token": {
       "type": "string",
-      "title": "TIP API token",
-      "description": "Agentic TIP API token (starts with APIV2). Use a read-only role: the intel lookup skill never writes.",
+      "title": "Dataminr ATIP API token",
+      "description": "Dataminr ATIP API token (starts with APIV2). Use a read-only role: the intel lookup skill never writes.",
       "required": true,
       "sensitive": true
     }

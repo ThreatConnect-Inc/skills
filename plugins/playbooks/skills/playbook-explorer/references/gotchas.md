@@ -14,7 +14,7 @@ An earlier, simpler playbook in this project used only static `Pass`-type connec
 When two near-identical jobs exist (same app, same params), check `playbookConnectionList` for which `If/Else` branch each sits under before assuming one is dead/duplicate work — they're commonly one job per branch, only one of which executes per run.
 
 ## MCP tool instance mismatch
-If this session also has `mcp__threatconnect__*` MCP tools available, they may be connected to a **different** TC instance than the one holding the playbook you actually want (confirmed: an MCP connector pointed at instance D while the target playbook lived on instance B). Don't assume the MCP tools and a direct API call via this skill are hitting the same instance — check the base URL being used for each.
+If this session also has `mcp__threatconnect__*` or `mcp__plugin_cti_dataminr-atip__*` MCP tools available, they may be connected to a **different** TC instance than the one holding the playbook you actually want (confirmed: an MCP connector pointed at instance D while the target playbook lived on instance B). Don't assume the MCP tools and a direct API call via this skill are hitting the same instance — check the base URL being used for each.
 
 ## `fields=common` is easy to under-request
 The platform's unified/normalized object data (`commonGroup`: CVSS for Vulnerabilities, `priority`/`mitreId` for Threat Actor Profiles) only appears when a fetch explicitly requests `fields=common`. It's easy for a playbook to request it on one fetch (e.g. a top-level query) but miss it on a related one (e.g. a downstream category-specific fetch) — when reviewing a playbook, check this per-job rather than assuming consistency across similar-looking fetches.
