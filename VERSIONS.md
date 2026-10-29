@@ -8,28 +8,36 @@ Release pass: bump `plugin.json`, update the plugin row and the rows of the skil
 
 | Plugin | Version | Last updated |
 |---|---|---|
-| `dataminr-cti` | 0.2.0 | 2026-10-28 |
-| `dataminr-playbooks` | 0.2.0 | 2026-10-28 |
+| `cti` | 0.3.0 | 2026-10-29 |
+| `playbooks` | 0.3.0 | 2026-10-29 |
 
 ## Skills
 
 | Skill | Version | Last updated | Plugin |
 |---|---|---|---|
-| `tip-intel-lookup` | 0.1.1 | 2026-10-27 | `dataminr-cti` |
-| `dataminr-playbook-builder` | 0.1.2 | 2026-10-27 | `dataminr-playbooks` |
-| `dataminr-playbook-explorer` | 0.1.2 | 2026-10-27 | `dataminr-playbooks` |
-| `dataminr-playbook-qa` | 1.3.1 | 2026-10-27 | `dataminr-playbooks` |
-| `tc-jmespath-assistant` | 0.1.0 | 2026-10-22 | `dataminr-playbooks` |
+| `intel-lookup` | 0.1.1 | 2026-10-29 | `cti` |
+| `playbook-builder` | 0.1.2 | 2026-10-29 | `playbooks` |
+| `playbook-explorer` | 0.1.2 | 2026-10-29 | `playbooks` |
+| `playbook-qa` | 1.3.1 | 2026-10-29 | `playbooks` |
+| `jmespath-assistant` | 0.1.0 | 2026-10-29 | `playbooks` |
 
 ## Changelog
 
 Newest first.
 
-### dataminr-playbooks 0.2.0 — 2026-10-28
-- Regrouped: the playbook builder, explorer and QA skills and the JMESPath assistant now ship together in one plugin. Install it as `dataminr-playbooks@dataminr-skills`. Skill content is unchanged.
+### playbooks 0.3.0 — 2026-10-29
+- Renamed for clarity. Skills are now `playbook-builder`, `playbook-explorer`, `playbook-qa` and `jmespath-assistant` (were `dataminr-playbook-*` and `tc-jmespath-assistant`); the plugin is `playbooks` (was `dataminr-playbooks`). Install it as `playbooks@dataminr`.
+- Added `playbook-builder/references/execution_logs.md` and updated the builder, explorer and QA skills to read execution logs when needed.
 
-### dataminr-cti 0.2.0 — 2026-10-28
-- Regrouped: the intel lookup skill now ships in the `dataminr-cti` plugin, which is the home for future CTI skills. Install it as `dataminr-cti@dataminr-skills`. Skill content is unchanged.
+### cti 0.3.0 — 2026-10-29
+- Renamed: the plugin is `cti` (was `dataminr-cti`) and the lookup skill is `intel-lookup` (was `tip-intel-lookup`). Install it as `cti@dataminr`. The bundled MCP server tools are now `mcp__plugin_cti_threatconnect__*`.
+- Bundles the TIP MCP server, configured with the instance hostname and an API token.
+
+### playbooks 0.2.0 — 2026-10-28
+- Regrouped (then named `dataminr-playbooks`): the playbook builder, explorer and QA skills and the JMESPath assistant now ship together in one plugin. Skill content is unchanged.
+
+### cti 0.2.0 — 2026-10-28
+- Regrouped (then named `dataminr-cti`): the intel lookup skill now ships in this plugin, which is the home for future CTI skills. Skill content is unchanged.
 
 ## Earlier history (before skills were grouped into plugins)
 

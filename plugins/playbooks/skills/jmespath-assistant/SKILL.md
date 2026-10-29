@@ -1,5 +1,5 @@
 ---
-name: tc-jmespath-assistant
+name: jmespath-assistant
 description: >
   JMESPath expression assistant scoped to ThreatConnect Playbooks. Use this skill whenever the user
   asks about JMESPath expressions, filter steps, or data transformation in TC Playbooks — including

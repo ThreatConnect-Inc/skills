@@ -1,8 +1,0 @@
-{
-  "name": "dataminr-cti",
-  "version": "0.2.0",
-  "description": "Cyber threat intelligence skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting over CVEs, actors, malware, campaigns and IOCs.",
-  "license": "Apache-2.0",
-  "author": { "name": "Emmet Wray", "email": "emmet.wray@dataminr.com" },
-  "keywords": ["threatconnect","cti","threat-intelligence","tip"]
-}

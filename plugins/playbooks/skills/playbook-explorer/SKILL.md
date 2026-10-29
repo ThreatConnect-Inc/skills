@@ -1,9 +1,9 @@
 ---
-name: dataminr-playbook-explorer
+name: playbook-explorer
 description: Retrieves, explains, and audits ThreatConnect/TIP Playbooks given a playbook id, groupXid, or name. Resolves the id (v3 API lookup), downloads the full job definition (v2 API — v3 cannot return a single playbook's full definition), and produces a structured summary of the trigger, the job graph, which apps are used (LLM/agent prompts, TQL, JMESPath, Template Builder/FTL, branches, loops, Cache Store), and the TQL/JMESPath patterns in use. Also reviews a playbook against a growing checklist of confirmed best practices (JSON robustness, TQL hygiene, FTL null-safety, architecture) and flags what's missing or worth improving, with concrete fixes. Can also diff/compare two playbooks to produce a migration list. Use this whenever the user gives a playbook id/xid/name and asks to pull down, look at, review, audit, download, debug, understand, compare, migrate changes between, or improve a ThreatConnect playbook, or asks what's missing or could be better about one — even without naming this skill or "ThreatConnect."
 ---
 
-<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/dataminr-playbooks/skills/dataminr-playbook-explorer/ . Edit only this file; ~/.claude/skills/dataminr-playbook-explorer is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
+<!-- CANONICAL SOURCE: the dataminr-skills repo, plugins/playbooks/skills/playbook-explorer/ . Edit only this file; ~/.claude/skills/playbook-explorer is a symlink to it. If you find another copy of this skill anywhere else, do not edit it: tell the user. -->
 
 # TC Playbook Explorer
 
@@ -98,13 +98,13 @@ It compares scope variables (where report/FTL templates and shared prompts often
 
 ## Checking a trigger payload against the playbook that reads it
 
-Use when a run fails in the first extract job after a trigger, or when someone says "the UI now sends different JSON". Get the failing payload (the user can paste it; the Designer execution log shows the trigger output), then:
+Use when a run fails in the first extract job after a trigger, or when someone says "the UI now sends different JSON". Get the failing payload (the user can paste it; the Designer execution log shows the trigger output; if you really need it and cannot get it from the user, the trigger step's outputs can be read via the internal execution API, see `playbook-builder/references/execution_logs.md`), then:
 
 ```bash
 python3 scripts/payload_contract_check.py <playbook.json> '<payload json>' [--job "Extract Report Config"]
 ```
 
-It lists the keys each trigger-reading JMESPath job expects, which are missing from the payload, and flags each missing read as guarded (`key || default`) or UNGUARDED, noting whether it will raise (`join`/`length`/`in` on null) or silently produce the text "null" (`to_string`). It is a heuristic reader, not a JMESPath engine: confirm the flagged expressions by eye. Present the result as a short table (missing field / expressions that read it / effect), separate real failures from harmless defaults, and note any value that merely looks different (a renamed label). Then hand the fix to `dataminr-playbook-builder` (make every payload read tolerant; see PAY-1..PAY-4).
+It lists the keys each trigger-reading JMESPath job expects, which are missing from the payload, and flags each missing read as guarded (`key || default`) or UNGUARDED, noting whether it will raise (`join`/`length`/`in` on null) or silently produce the text "null" (`to_string`). It is a heuristic reader, not a JMESPath engine: confirm the flagged expressions by eye. Present the result as a short table (missing field / expressions that read it / effect), separate real failures from harmless defaults, and note any value that merely looks different (a renamed label). Then hand the fix to `playbook-builder` (make every payload read tolerant; see PAY-1..PAY-4).
 
 ## Testing a JMESPath expression offline before it goes into a playbook
 
@@ -114,7 +114,7 @@ Use when you write or change an expression for a JMESPath job (a shaper, a confi
 python3 scripts/jmespath_local_test.py @expr.txt sample.json --sub 'rpt.assoc_groups=true'
 ```
 
-`--sub name=value` replaces a ThreatConnect variable reference (`#App:<id>:rpt.assoc_groups!String`) with a literal; any reference left unreplaced stops the run with a list. It runs the standard JMESPath engine plus APPROXIMATE stubs of TC's custom functions (`regex`, `ternary`, `in`, `compact`, `flatten_list`, `group_by`, `include_keys`) and prints a note whenever a stub was used. Treat a pass as "well-formed and handles this data", not as proof the real job accepts it, and confirm anything non-trivial in a disposable sandbox playbook (see `dataminr-playbook-builder`). The sample must include every record shape the job will meet; a null-field crash only shows up on the shapes that lack the field (see JMES-2). It needs the `jmespath` package; in a locked-down Python use a venv.
+`--sub name=value` replaces a ThreatConnect variable reference (`#App:<id>:rpt.assoc_groups!String`) with a literal; any reference left unreplaced stops the run with a list. It runs the standard JMESPath engine plus APPROXIMATE stubs of TC's custom functions (`regex`, `ternary`, `in`, `compact`, `flatten_list`, `group_by`, `include_keys`) and prints a note whenever a stub was used. Treat a pass as "well-formed and handles this data", not as proof the real job accepts it, and confirm anything non-trivial in a disposable sandbox playbook (see `playbook-builder`). The sample must include every record shape the job will meet; a null-field crash only shows up on the shapes that lack the field (see JMES-2). It needs the `jmespath` package; in a locked-down Python use a venv.
 
 ## Writing a hand-off brief for someone else's Claude Code session
 

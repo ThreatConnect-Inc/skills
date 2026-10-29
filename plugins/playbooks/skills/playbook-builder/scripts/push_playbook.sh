@@ -5,7 +5,7 @@
 # Usage:
 #   push_playbook.sh <base_url> <env_file> <edited.json> <backup_root> [--yes] [--brief] [--note "why"]
 #   --brief  print a semantic summary (changed jobs + connection changes, ids ignored) instead of the
-#            raw text diff, which is huge because every id renumbers. Needs dataminr-playbook-explorer's
+#            raw text diff, which is huge because every id renumbers. Needs playbook-explorer's
 #            diff_playbooks.py (override the path with DIFF_PLAYBOOKS=...); falls back to the raw diff.
 #
 # What it does, in order:
@@ -62,7 +62,7 @@ LOGLVL=$(python3 -I -c "import json,sys; print(json.load(open(sys.argv[1])).get(
 case "$LOGLVL" in DEBUG|TRACE) ;; *) echo "WARNING: logLevel is '$LOGLVL'. Dev/test playbooks should be DEBUG or TRACE (only INFO/WARN for production)." >&2 ;; esac
 python3 -I -m json.tool "$EDITED" > "$DIR/${TS}_edited.json"
 echo "---- diff (live -> edited) ----" >&2
-DIFFPY="${DIFF_PLAYBOOKS:-$HOME/.claude/skills/dataminr-playbook-explorer/scripts/diff_playbooks.py}"
+DIFFPY="${DIFF_PLAYBOOKS:-$HOME/.claude/skills/playbook-explorer/scripts/diff_playbooks.py}"
 if [ "$BRIEF" = "1" ] && [ -f "$DIFFPY" ]; then
   python3 "$DIFFPY" "$BEFORE" "$DIR/${TS}_edited.json" 2>&1 | awk '/^=== (CONNECTIONS|SUMMARY)/{p=1} p' >&2 || true
 else

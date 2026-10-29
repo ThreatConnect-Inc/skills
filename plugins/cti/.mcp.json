@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "threatconnect": {
+      "type": "http",
+      "url": "https://${user_config.tip_host}/api/v3/mcp",
+      "headers": {
+        "Authorization": "Bearer ${user_config.tip_api_token}"
+      }
+    }
+  }
+}

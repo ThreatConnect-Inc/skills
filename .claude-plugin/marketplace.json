@@ -1,5 +1,5 @@
 {
-  "name": "dataminr-skills",
+  "name": "dataminr",
   "owner": {
     "name": "Emmet Wray",
     "email": "emmet.wray@dataminr.com"
@@ -9,13 +9,13 @@
   },
   "plugins": [
     {
-      "name": "dataminr-cti",
-      "source": "./plugins/dataminr-cti",
+      "name": "cti",
+      "source": "./plugins/cti",
       "description": "CTI skills for a Dataminr/ThreatConnect TIP: natural-language lookup and reporting."
     },
     {
-      "name": "dataminr-playbooks",
-      "source": "./plugins/dataminr-playbooks",
+      "name": "playbooks",
+      "source": "./plugins/playbooks",
       "description": "Build, explore, test and QA ThreatConnect Playbooks and agents, plus JMESPath help."
     }
   ]

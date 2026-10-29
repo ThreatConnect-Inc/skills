@@ -28,7 +28,7 @@ IMPORTANT LIMITS
     error text, null handling). A pass here means "the expression is
     well-formed and handles this data"; it is not proof the real job accepts
     it. Confirm anything non-trivial in a disposable sandbox playbook (see
-    dataminr-playbook-builder) or in the Designer.
+    playbook-builder) or in the Designer.
   * Functions the real library has but this script does not stub fail with
     "Unknown function"; that says nothing about the real job.
   * Test data must include every record shape the job will meet (every

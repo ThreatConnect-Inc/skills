@@ -6,15 +6,16 @@ Claude skills for threat intelligence work on the Dataminr and ThreatConnect TIP
 
 Skills are grouped into plugins by topic. Install a plugin to get all of its skills.
 
-- **`dataminr-playbooks`**: build, explore, test and QA ThreatConnect Playbooks and agents.
-- **`dataminr-cti`**: cyber threat intelligence skills for a TIP.
+- **`playbooks`**: build, explore, test and QA ThreatConnect Playbooks and agents.
+- **`cti`**: cyber threat intelligence skills for a TIP.
 
 | Skill | Plugin | What it does |
 |---|---|---|
-| `tip-intel-lookup` | `dataminr-cti` | Natural-language lookup and reporting over a TIP via the ThreatConnect MCP server or API |
-| `dataminr-playbook-builder` | `dataminr-playbooks` | Build, push and live-test Playbooks from their JSON definition |
-| `dataminr-playbook-explorer` | `dataminr-playbooks` | Retrieve, explain, audit and diff Playbooks |
-| `dataminr-playbook-qa` | `dataminr-playbooks` | QA agent-based playbooks across every trigger pathway |
+| `intel-lookup` | `cti` | Natural-language lookup and reporting over a TIP via the ThreatConnect MCP server or API |
+| `playbook-builder` | `playbooks` | Build, push and live-test Playbooks from their JSON definition |
+| `playbook-explorer` | `playbooks` | Retrieve, explain, audit and diff Playbooks |
+| `playbook-qa` | `playbooks` | QA agent-based playbooks across every trigger pathway |
+| `jmespath-assistant` | `playbooks` | JMESPath help scoped to ThreatConnect Playbooks |
 
 The playbook skills name each other, so Claude hands off between them in one conversation.
 
@@ -40,8 +41,8 @@ OR
 
 ```
 /plugin marketplace add ThreatConnect-Inc/skills
-/plugin install dataminr-playbooks@dataminr-skills
-/plugin install dataminr-cti@dataminr-skills
+/plugin install playbooks@dataminr
+/plugin install cti@dataminr
 ```
 
 
@@ -53,7 +54,7 @@ TC_KEY=APIV2.........
 
 You can get an APIV2 key by editing any API account in the TIP.
 
-The marketplace is named `dataminr-skills`; install each plugin as `<plugin>@dataminr-skills`.
+The marketplace is named `dataminr`; install each plugin as `<plugin>@dataminr`.
 
 ## Develop
 

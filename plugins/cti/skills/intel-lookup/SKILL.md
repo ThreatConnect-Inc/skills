@@ -1,5 +1,5 @@
 ---
-name: tip-intel-lookup
+name: intel-lookup
 description: Look up, synthesize, and report on threat intelligence held in a Dataminr/ThreatConnect TIP instance — CVEs, threat actors/adversaries, malware, campaigns, IOCs, PIR (Priority Intelligence Requirement) matches, daily triage, and industry/country impact scans. Use this skill whenever the user asks about a CVE, threat actor, malware family, campaign, or IOC by name; asks "what's new," "what should I prioritize," "what's the latest intel on X," "is X impacting my industry/country," or anything referencing their PIRs, intel requirements, watchlist, or TIP/ThreatConnect platform data. Trigger even if the user doesn't say "ThreatConnect" or "TIP" explicitly — if they're asking about threat intelligence content that would live in a TIP, use this skill. Also use it when the user wants a report, brief, or summary generated from TIP results.
 ---
 
@@ -9,7 +9,7 @@ Retrieves and synthesizes threat intelligence from a ThreatConnect/Agentic TIP i
 
 ## Before anything else: which access path is available?
 
-Check the current tool list for `tc_resources` / `tc_list` / `tc_describe` / `tc_get` / `tc_create` / `tc_update` / `tc_delete` (the `mcp__threatconnect__*` tools, load via tool_search if deferred).
+Check the current tool list for `tc_resources` / `tc_list` / `tc_describe` / `tc_get` / `tc_create` / `tc_update` / `tc_delete` (named `mcp__threatconnect__*` when added by hand, or `mcp__plugin_cti_threatconnect__*` when it comes from the `cti` plugin; load via tool_search if deferred).
 
 **This skill currently operates MCP-only.** Direct API access (`reference/direct_api_fallback.md`) is documented for a future release but not currently wired into any workflow below — the security tradeoff of passing a raw API token through chat wasn't one the customer wanted to accept yet, and there's no secure channel in this environment to supply it otherwise (unlike MCP, where the token exchange happens outside the model's context entirely).
 
