@@ -104,6 +104,12 @@ Indicators have no `insights` (`fields=insights` is rejected for them), no `comm
 ## An LLM job feeding `?eval_json` can fail by narrating
 When a Base Agent that must emit JSON feeds a template's `?eval_json`, it sometimes writes reasoning before the JSON (the error quotes the first words, for example `Invalid JSON keyword: "Junk"`), or it narrates until its output-token cap and never reaches the JSON (the error quotes the first word of the narration). Defences: (a) extract the object defensively in the Template Builder (return the trimmed text if it starts with `{`, else the first `{...}` block via `?matches('(?s)...')`); (b) tell the agent to work silently and output only the JSON, in both the system and the user prompt; (c) set `maxOutputTokens` generously for synthesis workers. Read the Designer log for the first failed template job: the error text shows the start of its bad input.
 
+## Asset image tokens only survive inside a `<section>`, not a `<header>`
+Confirmed in the Report editor: the `<header>` block is discarded and `<section>` blocks are kept. A platform image token (`<<assetImageId=NN>>`) placed only in the header never becomes an image, so a format with no cover section shows no logo. Put the token inside the first section and it becomes a real `<img>` at its natural size (588x640 here), so cap it in CSS with `max-height` and `!important`.
+
+## "Completed" is not "good report", and a stricter empty-case rule can break the non-empty case
+Confirmed: adding "return exactly `[]` when a slice is empty" to a section-builder prompt made the worker return `[]` for every slice, so the run finished Completed with no stories. Reverting the wording fixed it; the lasting fix was a deterministic parser in the assembling template that takes the last JSON array in the reply (tolerating leading prose) and defaults to `[]`. In regression tests assert content (story or section count, closing `</html>`), not just execution status.
+
 ## The printed job summary of a push dry run omits scope variables
 `push_playbook.sh --brief` prints jobs only; a report template stored as a playbook scope variable does not appear in that summary. After a template edit, diff scope variables as well (see the `diff_playbooks.py` entry above).
 

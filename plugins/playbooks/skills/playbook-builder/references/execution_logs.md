@@ -54,7 +54,8 @@ Each input/output is `{name, value}` with the value stored as an escaped JSON st
 Tips:
 - Payloads can be tens of KB and may contain customer or intelligence data. Do not paste them wholesale: extract the specific fact you need (a length, whether a marker string is present, a short snippet around a keyword such as the model's stray prose) and keep tool output small (it truncates near 1,000 characters).
 - Some JavaScript tools block output that contains URLs with query strings or cookie-like text; strip `?`, `&` and `=` from any snippet you print.
-- Keep intermediate results in a page variable (for example `window.__steps`) between calls instead of refetching.
+- Keep intermediate results in a page variable (for example `window.__steps`) between calls instead of refetching. Some JavaScript tools return `{}` for an awaited async expression: start the fetch without awaiting, store the result on `window`, and read it in a second call.
+- `details/outputs` returns a bare JSON array of `{name, value}` (no `{data: [...]}` wrapper); unquote the value before measuring its length.
 - Log level matters: the playbook needs `logLevel` `DEBUG` or `TRACE` for step detail (see `SKILL.md`). A run executed before a log-level change will not have it.
 - After a programmatic push and activation the Designer can show no execution data until the user disables, refreshes and re-enables (user-reported platform bug). Not tested whether the API calls above are affected; if a run you started does not appear in the list, check this before assuming it did not run.
 

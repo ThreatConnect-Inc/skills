@@ -41,3 +41,10 @@ This means the variable was referenced in the template body but never actually b
 - A variable you add must not collide with one already in the template: reusing `total` silently changed section numbering. Search the file for the name first.
 - Dynamic hash keys are written `{k: v}` with `k` computed. Interpolation printed raw here is `[= ... ]` with no auto-escape, so to render safe bold from model text split on `**` and alternate `<b>` and plain text by index parity instead of emitting model-written HTML.
 - There is no offline runtime without Java: check tag balance after every edit and treat the first live run as the test.
+
+## Template Builder output is capped at 65,536 characters (an oversized report fails silently)
+Confirmed: a Template Builder step rendering a large HTML report returned exactly 65,536 characters, cut mid-tag and ending in `...`. The execution still showed Completed, but the report viewer showed "AI report generation failed" over an empty editor; a smaller report from the same playbook rendered fine.
+- **Detect:** read the step's `details/outputs` (see `playbook-builder/references/execution_logs.md`) and check the value length (65,536 means capped) and that it ends with `</html>`. Run time did not explain it: a truncated 264 s run failed while untruncated 259-272 s runs rendered.
+- **Measure first:** in one report the CSS was 23 KB of the 64 KB, there were no embedded fonts or images, and uncapped model-driven lists were the swing factor.
+- **Safe levers:** cap every model-driven list in the prompt (events, rows, items) with a stated ranking rule; wrap the template in `<#compress>...</#compress>` (cut the CSS block by about 4 KB); keep fonts and images out of the HTML. Do not prune CSS rules (class names are model-chosen at run time); only minify whitespace.
+- **Headroom:** identical runs varied by about 1 KB, so test a worst-case input and stay well under the cap (here 53-57 KB).
