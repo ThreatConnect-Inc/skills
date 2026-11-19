@@ -9,15 +9,15 @@ Release pass: bump `plugin.json`, update the plugin row and the rows of the skil
 | Plugin | Version | Last updated |
 |---|---|---|
 | `cti` | 0.4.0 | 2026-10-29 |
-| `playbooks` | 0.4.0 | 2026-11-19 |
+| `playbooks` | 0.4.1 | 2026-11-19 |
 
 ## Skills
 
 | Skill | Version | Last updated | Plugin |
 |---|---|---|---|
 | `intel-lookup` | 0.1.2 | 2026-10-29 | `cti` |
-| `playbook-builder` | 0.2.0 | 2026-11-19 | `playbooks` |
-| `playbook-explorer` | 0.2.0 | 2026-11-19 | `playbooks` |
+| `playbook-builder` | 0.2.1 | 2026-11-19 | `playbooks` |
+| `playbook-explorer` | 0.2.1 | 2026-11-19 | `playbooks` |
 | `playbook-qa` | 1.3.2 | 2026-11-19 | `playbooks` |
 | `playbook-eval` | 0.1.0 | 2026-11-19 | `playbooks` |
 | `jmespath-assistant` | 0.1.1 | 2026-11-19 | `playbooks` |
@@ -25,6 +25,10 @@ Release pass: bump `plugin.json`, update the plugin row and the rows of the skil
 ## Changelog
 
 Newest first.
+
+### playbooks 0.4.1 — 2026-11-19
+- `playbook-builder` 0.2.1: new `references/agent_capabilities.md` (agent tools, Knowledge items and the AI Hybrid Search step, and when to use which); Iterator wiring recipe pointer; Timer-trigger create shape (Quartz cron).
+- `playbook-explorer` 0.2.1: Iterator wiring recipe, JMES-5 (set difference via `group_by`) and ARCH-6 (scheduled lookback) in the review checklist, AI Hybrid Search app details.
 
 ### playbooks 0.4.0 — 2026-11-19
 - New skill `playbook-eval`: design agent evals up front, set up a regression/quality/reliability framework with an LLM judge, review model tier per job against public benchmarks you supply (`model_compare.py`, `job_inventory.py`), and find efficiencies.
