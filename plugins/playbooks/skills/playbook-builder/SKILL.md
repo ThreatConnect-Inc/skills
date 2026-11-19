@@ -16,7 +16,7 @@ Scripts (all in this skill's `scripts/`; none print `TC_KEY`):
 | `playbook_ctl.sh` | `status` / `activate [draftId]` / `deactivate`; prints version, status and the **current** webhook endpoint |
 | `test_webhook.sh` | call the current webhook endpoint (optional `--query`/`--body`), fail on non-2xx, save the response beside the backups |
 
-Fetching/reading uses `playbook-explorer`'s `scripts/fetch_playbook.sh`. Details of API behavior: `references/api_notes.md`.
+Fetching/reading uses `playbook-explorer`'s `scripts/fetch_playbook.sh`. Details of API behavior: `references/api_notes.md`. Giving an agent tools (`agentTools`), Knowledge items (`userContext`) or an AI Hybrid Search step, and when to use which: `references/agent_capabilities.md`.
 
 ## The mental model (read this first)
 
