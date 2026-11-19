@@ -9,6 +9,10 @@
 # - The playbook must already be ACTIVE (use playbook_ctl.sh activate <groupXid> <draftId>).
 set -euo pipefail
 BASE_URL="${1:?usage: test_webhook.sh <base_url> <env_file> <groupXid> <backup_root> [--query q] [--body json] [--label text]}"
+case "$BASE_URL" in
+  https://*|http://localhost*|http://127.0.0.1*) ;;
+  *) echo "ERROR: base_url must start with https:// (got '$BASE_URL'); the API key is sent in a header" >&2; exit 1 ;;
+esac
 ENV_FILE="${2:?}"; XID="${3:?}"; ROOT="${4:?}"; shift 4
 QUERY=""; BODY=""; LABEL=""
 while [ $# -gt 0 ]; do

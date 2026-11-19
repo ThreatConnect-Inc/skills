@@ -244,6 +244,12 @@ sort_by(people, &age)[].age
 sort_by(people, &to_number(age_str))
 ```
 
+Newest N items first (filter on `[?dateAdded]` first so items missing the key do not cause an error; used in a working playbook):
+
+```
+{data: reverse(sort_by(data[?dateAdded], &dateAdded))[:12]}
+```
+
 ---
 
 ## starts_with

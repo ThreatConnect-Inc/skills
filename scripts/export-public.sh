@@ -13,12 +13,14 @@ rsync -a --exclude .git --exclude .DS_Store --exclude docs --exclude CLAUDE.md -
 # Drop plugins or skills listed in .public-exclude from the export: directory, marketplace entry, README and VERSIONS rows.
 if [ -f "$repo/.public-exclude" ]; then
   python3 - "$dest" "$repo/.public-exclude" <<'PY'
-import json, re, shutil, sys
+import json, os, re, shutil, sys
 dest, listfile = sys.argv[1], sys.argv[2]
 names = [l.strip() for l in open(listfile) if l.strip() and not l.startswith("#")]
 import glob
 for n in names:
     shutil.rmtree(f"{dest}/plugins/{n}", ignore_errors=True)
+    for b in glob.glob(f"{dest}/.skillspector/baselines/{n}.*"):
+        os.remove(b)
     for d in glob.glob(f"{dest}/plugins/*/skills/{n}"):
         shutil.rmtree(d, ignore_errors=True)
 mp = f"{dest}/.claude-plugin/marketplace.json"
@@ -45,5 +47,12 @@ if [ -f "$repo/.leak-patterns" ]; then
   fi
 fi
 if grep -rIEn '/Users/|/private/tmp/' "$dest" --exclude=validate-skills.sh --exclude=export-public.sh >/dev/null 2>&1; then echo "ERROR: local paths in export" >&2; exit 1; fi
+# Security scan of the exact content that will be published (SkillSpector, static analysis).
+if [ "${SKIP_SKILLSPECTOR:-0}" = "1" ]; then
+  echo "WARNING: SKIP_SKILLSPECTOR=1, skipping the SkillSpector scan" >&2
+else
+  "$repo/scripts/scan-skills.sh" --root "$dest/plugins" --baselines "$dest/.skillspector/baselines" >&2 \
+    || { echo "ERROR: SkillSpector found new high/critical issues in the export (details above)" >&2; exit 1; }
+fi
 cd "$dest" && git init -q -b main && git add -A && git commit -q -m "Initial release"
 echo "Clean export ready: $dest ($(git ls-files | wc -l | tr -d ' ') files, 1 commit)"

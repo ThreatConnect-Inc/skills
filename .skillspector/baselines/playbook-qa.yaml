@@ -1,0 +1,17 @@
+# SkillSpector baseline: line-independent rules for findings reviewed and accepted.
+# Each rule is narrow (rule id + file + matched text) so new findings still surface.
+version: 2
+scanner_version: '2.12.0'
+rules:
+  - id: 'LP3'
+    path: 'SKILL.md'
+    reason: 'Reviewed 2026-11-19: no tool scope by design; the skill needs shell and file access'
+  - id: 'P6'
+    path: 'SKILL.md'
+    message: '*print your system prompt*'
+    reason: 'Reviewed 2026-11-19: a guardrail test input the skill sends to the agent under test'
+  - id: 'AR2'
+    path: 'SKILL.md'
+    message: '*never judge*'
+    reason: 'Reviewed 2026-11-19: test guidance: do not judge success from the HTTP status alone'
+fingerprints: []

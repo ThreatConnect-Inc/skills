@@ -11,6 +11,10 @@
 # (the endpoint UUID changes with every version — never reuse an old one).
 set -euo pipefail
 BASE_URL="${1:?usage: playbook_ctl.sh <base_url> <env_file> <status|activate|deactivate> <groupXid> [draftId]}"
+case "$BASE_URL" in
+  https://*|http://localhost*|http://127.0.0.1*) ;;
+  *) echo "ERROR: base_url must start with https:// (got '$BASE_URL'); the API key is sent in a header" >&2; exit 1 ;;
+esac
 ENV_FILE="${2:?}"; ACTION="${3:?}"; XID="${4:?}"; DRAFT="${5:-}"
 # shellcheck disable=SC1090
 source "$ENV_FILE"; [ -n "${TC_KEY:-}" ] || { echo "ERROR: TC_KEY not set" >&2; exit 1; }

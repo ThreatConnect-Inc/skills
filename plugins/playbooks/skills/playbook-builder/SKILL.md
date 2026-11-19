@@ -25,6 +25,16 @@ Fetching/reading uses `playbook-explorer`'s `scripts/fetch_playbook.sh`. Details
 - **Activating a draft id promotes it** to published (minor version bump, e.g. 5.0 -> 5.1; re-activating bumps again) — so "publish" = activate the draft. Deactivating leaves it published but Inactive.
 - **The webhook endpoint UUID can change between versions.** Never reuse an old one.
 
+## Step 0 — Align on direction before building
+
+Skip this when the user has directed the exact change ("set X to Y and test it"). Otherwise, before creating a playbook or making a non-trivial change, confirm you are building the right thing. A fresh user has no project history to resolve ambiguity for you, and an experienced one may have history that silently fills in answers they did not mean to give.
+
+1. **Restate** in a few lines: the goal, how it is triggered, inputs and outputs, the apps you expect to use, branching, test data, the target instance, and what must not change.
+2. **Label each assumption by source**: from this conversation, from project files or earlier sessions (env files, backup folder, naming, instance, prior playbooks), or your own default. Confirm anything that came from history or your own default; do not apply it silently.
+3. **Ask the open questions in one round** (AskUserQuestion), each with a recommended default. Typical gaps: which instance; new playbook or edit of an existing one; what the output is for; failure behaviour (error message, retry, silent); who may activate it; whether production data may be touched.
+4. **Pause for a yes at two checkpoints:** after proposing the job graph in plain terms (before writing JSON), and before the first push (Step 5). Later pushes within the agreed design need only the usual change confirmation.
+5. If the answers change the design, restate it once and move on; do not turn this into a questionnaire.
+
 ## Step 1 — Connect to the right instance
 
 - **Direct API (default, instance-explicit).** Needs a base URL and a `TC_KEY` env file. Env files are per instance (`.env_instanceA`, `.env_instanceB`, `.env_instanceC`...) and contain only `TC_KEY` — not the URL. Look in the project or the working directory the user names; never fabricate or reuse a key from another instance. If the URL isn't given, ask the user for it; do not guess an instance.

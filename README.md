@@ -15,6 +15,7 @@ Skills are grouped into plugins by topic. Install a plugin to get all of its ski
 | `playbook-builder` | `playbooks` | Build, push and live-test Playbooks from their JSON definition |
 | `playbook-explorer` | `playbooks` | Retrieve, explain, audit and diff Playbooks |
 | `playbook-qa` | `playbooks` | QA agent-based playbooks across every trigger pathway |
+| `playbook-eval` | `playbooks` | Design and run agent evals, review model choice per job, find agentic efficiencies |
 | `jmespath-assistant` | `playbooks` | JMESPath help scoped to ThreatConnect Playbooks |
 
 The playbook skills name each other, so Claude hands off between them in one conversation.
@@ -58,7 +59,7 @@ The marketplace is named `dataminr`; install each plugin as `<plugin>@dataminr`.
 
 ## Develop
 
-Clone the repo and run `scripts/link-skills.sh` to symlink every skill in `plugins/` into `~/.claude/skills/` so edits are live in Claude Code. Run `./validate-skills.sh` before committing. See `CONTRIBUTING.md` for conventions.
+Clone the repo and run `scripts/link-skills.sh` to symlink every skill in `plugins/` into `~/.claude/skills/` so edits are live in Claude Code. Run `./validate-skills.sh` and `scripts/scan-skills.sh` (a SkillSpector security scan) before committing. See `CONTRIBUTING.md` for conventions.
 
 ## Layout
 

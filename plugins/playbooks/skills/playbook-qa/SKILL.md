@@ -38,6 +38,7 @@ Build cases from the agent's description, not generically. For each target agent
 - Multi-turn: follow-up in the same chat that should hand off between agents ("Tell me about X" then "Turn that into an executive brief"), and a follow-up that changes intent.
 - Agent-specific parameters: for each option the agent exposes (e.g. report audience: Executive / Technical / Deep-Dive), test prompts that STATE the option, IMPLY it, and leave it UNSPECIFIED (to trigger the clarification mechanism). Then click through the options to verify the output matches the option chosen.
 - Consistency repeats: re-run the ambiguous and issue cases 2-3x; LLM routing is non-deterministic.
+- Real-usage cases: when real user questions are available, classify them into themes with a short codebook (drop pasted queries, scheduled or templated prompts, non-English and test-instance traffic), rank themes by share, and draft two questions per top theme worded like users. Check via the API that records exist for each question before adding it. Evidence: on one agent, such questions scored lower (70% pass) than the hand-written set (88%), mostly on open digest and sector-style questions, so hand-written sets can overstate quality.
 
 Give each case an ID (C = core, E = edge, R = round-2 style, then agent-specific prefixes like RG for Report Generator; add -P suffix for post-patch variants). Keep the case table: ID, prompt, expected agent/behaviour, rationale. Show the planned list to the user briefly before running if the suite is large (>30 runs), otherwise just run.
 
@@ -51,7 +52,9 @@ UI facts learned (verify on screen; coordinates are viewport-dependent and shift
   - Report Generator: either asks the audience (buttons: Executive Brief / Technical Analyst Report / Deep-Dive Intel Report) or writes the full report directly. Reports take ~30-90s.
   - Requirement Wizard: "Question 1 - Requirement Name" style first step (X of N). Replies in 2-10s.
   - Router clarification: chat titled "Clarification Needed", no agent ran; lists options or suggested prompts.
+- **Prefer a webhook harness for answer-quality runs:** where possible, test a copy of the agent's playbook with a webhook trigger in place of the chat trigger (section 9, `playbook-builder`). It needs no UI or chat session and is easy to run in batches. Keep the copy in sync with the live definition (same apps, settings and any newly added inputs); a harness missing a recent change confounds every comparison against it. Use the Ask AI chat UI when the thing under test is routing or multi-turn behaviour. If you need the real chat path without a browser (for example single-turn answers from the live agent), the internal chat API works (internal and unsupported; verify on your build): with `Authorization: TC <api token>`, `POST /api/internal/chat/conversation/create` body `{"availableGroupXids": ["<agent groupXid>"], "message": "<text>"}` returns `conversation.id`; poll `GET /api/internal/chat/conversation/<id>/details?limit=50` until `status` is not `Running` and an `AI` message exists. The answer is that message's content parts joined; `executions[]` lists each step (`appName`, its messages, `queuedTime`/`startedTime`/`exitTime`), so a step's output, such as a query-rewriting agent's JSON, can be read too.
 - Timing: chat message timestamps give true latency, so read them rather than guessing from polling. Record "checked at" as an upper bound.
+- Do not time chats from the client under load. With about 20 chats in flight the platform queued the first step (median queue wait ~57 s against 0-1 s at 2-3 in flight), so client time was roughly three times the real agent time. Compute agent time as first step queued to last step exit from `executions`, report queue wait separately, and time at low concurrency. Timestamps have whole-second resolution and come as epoch ms or ISO strings, so parse both.
 - Navigation pitfall: from inside a chat, the first Back goes to the Chats list, not the new-chat screen. Click Back TWICE before typing the next prompt, otherwise the prompt lands in an old chat and corrupts the run. Screenshot to confirm you are on a blank new chat before typing.
 - Batch size: keep browser batches small (about 2 tests per batch). Large batches can time out while still executing. If a batch reports a timeout, do not blindly re-run: open the Chats list and recover results from the chats already created.
 - UI glitches (e.g. audience question not rendering until the chat is reopened from the Chats list) are findings; log them separately from agent-behaviour issues.
@@ -96,6 +99,8 @@ Then group issues into numbered findings (F1, F2...), each with: severity (High/
 For consistency, report rates as "N of M runs" per case, not just pass/fail.
 
 For post-patch/regression rounds: re-run the earlier issue cases with the same case IDs and same prompts, add -P variants for new ones, and mark findings "fixed after patch" or "still open", with before/after counts.
+
+To score the REPORTS themselves (A/B of two agent versions, quality, accuracy, consistency), use `references/report_quality_rubric.md`: blind pairwise judging, anchored 1-5 dimensions, defect severities, a mandatory platform claim-check, scripted consistency/truncation checks, and a calibration set.
 
 ## 4. Recommendations (be ruthless about brevity)
 
@@ -491,29 +496,4 @@ equally confirmed as a cleanly-reproduced mechanical bug overstates the evidence
 
 ## 17. Retrieval / search evaluation adapter (compare search configurations, no report generation)
 
-Use when the question is "does retrieval mode A return better source material than mode B" (keyword vs semantic/hybrid, before vs after a search-engine update, different Knowledge options) rather than "does the agent behave". It isolates search quality from generation quality, runs with no browser, and is cheap because everything except the relevance labels is scripted. Helper: `references/retrieval_eval.py` (stdlib only: `pool` builds judge inputs, `score` computes all metrics).
-
-### 17.1 Harness
-Build a webhook playbook (see `playbook-builder`, "Retrieval-eval echo harness") whose body takes `{"query", "mode", "start"}`, runs the Knowledge/search item for that mode, and has a Base Agent at temperature 0 only echo what it was given (id, type, name, date, score, tags). Add one mode per configuration under test (e.g. `keyword`, `hybrid`, `combo`). The webhook endpoint UUID changes every playbook version: re-read it before each run and record the version. Verify echoed ids against the API once (the echo is an LLM).
-
-### 17.2 Query set design
-Aim for 20+ requests covering: named entity, alias of an entity, group/family name, exact identifier (e.g. a CVE), product with news, concept with no entity, multi-heading request, vague one-word topic, real chat-style questions with audience wording, and one out-of-domain control (should return nothing relevant). Keep the exact wrapper wording of production requests so wrapper words that pollute matches show up. **After any fix or tuning, write a fresh held-out set of the same shape and run that too**: a first set that looked good for the new option (hybrid ahead on the tuned set) reversed on the held-out set (hybrid behind overall, ahead only on concept/multi-heading requests). Never tune a threshold and report on the same set.
-
-### 17.3 Run
-Run every query in every mode, a few in parallel, writing one file per (case, mode, repeat) and skipping files that exist so a re-run resumes. Treat HTTP errors and empty 2xx bodies as failures. Keep old results untouched and write new runs to a new directory.
-
-### 17.4 Judge (the only LLM step)
-`retrieval_eval.py pool` writes unique (case, id) items across modes as shuffled-by-case judge inputs (judges never see which mode returned an item). Give each judge agent about 200 items with titles, tags and descriptions (up to 600 chars), the 0/1/2 rubric (0 unrelated or matches only wrapper words, 1 related/indirect, 2 directly about the request), and ask for an item-specific reason of at most 12 words. Rules learned the hard way:
-- Reuse existing labels by (case, id) and judge only new items; when old and new items are compared, judge them in one pool if you can (separate judge batches drift).
-- After each judge returns, verify the output file exists, its keys equal the input pids, and every label is 0/1/2. One judge reported success without writing its file; another labelled a different batch's items. Do not trust the hand-back text.
-- Judges tend to emit templated reasons per label tier. Spot-check 10-15 random items per run, and for entity requests check labels against the text with a script (items containing the entity name labelled 0, items without it labelled 2).
-
-### 17.5 Score (scripted)
-`retrieval_eval.py score <results_dir> "<labels_glob>"` prints precision at 5/10/16 per mode, a per-case table, score-band calibration for scored modes, and a merge simulation (semantic results above a score threshold first, then keyword). Report: mean precision per mode with n, wins/ties/losses per request, the cases where each mode fails, whether the control returns results, result counts versus the requested limit, and share of results below a useful score. Compare modes within one judged set; do not compare absolute numbers across sets. A mode can lead at the top 5 and trail at the top 16 (long noisy tail), so report both depths.
-
-### 17.6 Traps
-- A combined mode that attaches two search items does not de-duplicate and its first N depends on item order; simulate merges in the scorer instead.
-- Keyword-generator output varies run to run: a single run per request is a sample, not a measurement; repeat a few cases if a decision hangs on them.
-- Out-of-domain controls: if the harness lacks the production guard, the search runs on the error text; note it.
-- Wrapper words ("brief", "analyst", "report", "weekly") matching titles is a retrieval defect worth counting separately.
-- Write findings for the search owner with ids per case; the method belongs here, instance-specific findings do not.
+Use when the question is whether retrieval mode A returns better source material than mode B (keyword vs semantic/hybrid, before vs after a search update, different Knowledge options). Full procedure (harness, query set design, run, judge, scripted scoring, traps): `references/retrieval_eval_adapter.md`; helper `references/retrieval_eval.py`.

@@ -9,21 +9,30 @@ Release pass: bump `plugin.json`, update the plugin row and the rows of the skil
 | Plugin | Version | Last updated |
 |---|---|---|
 | `cti` | 0.4.0 | 2026-10-29 |
-| `playbooks` | 0.3.1 | 2026-10-29 |
+| `playbooks` | 0.4.0 | 2026-11-19 |
 
 ## Skills
 
 | Skill | Version | Last updated | Plugin |
 |---|---|---|---|
 | `intel-lookup` | 0.1.2 | 2026-10-29 | `cti` |
-| `playbook-builder` | 0.1.3 | 2026-10-29 | `playbooks` |
-| `playbook-explorer` | 0.1.3 | 2026-10-29 | `playbooks` |
-| `playbook-qa` | 1.3.1 | 2026-10-29 | `playbooks` |
-| `jmespath-assistant` | 0.1.0 | 2026-10-29 | `playbooks` |
+| `playbook-builder` | 0.2.0 | 2026-11-19 | `playbooks` |
+| `playbook-explorer` | 0.2.0 | 2026-11-19 | `playbooks` |
+| `playbook-qa` | 1.3.2 | 2026-11-19 | `playbooks` |
+| `playbook-eval` | 0.1.0 | 2026-11-19 | `playbooks` |
+| `jmespath-assistant` | 0.1.1 | 2026-11-19 | `playbooks` |
 
 ## Changelog
 
 Newest first.
+
+### playbooks 0.4.0 — 2026-11-19
+- New skill `playbook-eval`: design agent evals up front, set up a regression/quality/reliability framework with an LLM judge, review model tier per job against public benchmarks you supply (`model_compare.py`, `job_inventory.py`), and find efficiencies.
+- `playbook-builder` 0.2.0: new Step 0 asks the user to confirm direction before building (restate the goal, label assumptions that came from history or defaults, one round of questions, pauses after the proposed job graph and before the first push). Also: activate by draft id, queue wait vs run time, reading the raw Knowledge an agent received, learning an unfamiliar app's parameters.
+- `playbook-explorer` 0.2.0: `fetch_app_doc.sh` and a cached index of Playbook apps from the public docs catalog for apps not yet in the cheatsheet; asks about scope when a request is vague; agent API tool URL rule, AI Search app, Datetime offsets, LLM-10 search-then-answer practice.
+- `playbook-qa` 1.3.2: report-quality judging rubric, webhook-harness-first answer runs with a chat API fallback, load-safe timing, cases from real usage; the retrieval-evaluation adapter moved to `references/retrieval_eval_adapter.md`.
+- `jmespath-assistant` 0.1.1: newest-N `sort_by` example.
+- Hardening from the SkillSpector scan: the builder and explorer scripts that send the API key require an `https://` base URL (localhost excepted), and `fetch_app_doc.sh` only fetches pages on the public ThreatConnect docs host, over https, with a note that fetched text is reference, not instructions.
 
 ### cti 0.4.0 — 2026-10-29
 - The bundled MCP server is now named `dataminr-atip` (was `threatconnect`), shown as Dataminr ATIP. Its tools are now `mcp__plugin_cti_dataminr-atip__*`; update any saved permissions or references to the old prefix.

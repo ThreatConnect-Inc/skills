@@ -21,6 +21,10 @@
 set -euo pipefail
 
 BASE_URL="${1:?usage: push_playbook.sh <base_url> <env_file> <edited.json> <backup_root> [--yes] [--note text]}"
+case "$BASE_URL" in
+  https://*|http://localhost*|http://127.0.0.1*) ;;
+  *) echo "ERROR: base_url must start with https:// (got '$BASE_URL'); the API key is sent in a header" >&2; exit 1 ;;
+esac
 ENV_FILE="${2:?}"; EDITED="${3:?}"; BACKUP_ROOT="${4:?}"; shift 4
 YES=0; NOTE=""; BRIEF=0
 while [ $# -gt 0 ]; do

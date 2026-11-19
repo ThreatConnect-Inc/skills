@@ -1,7 +1,7 @@
 {
   "name": "playbooks",
-  "version": "0.3.1",
-  "description": "Build, explore, test and QA ThreatConnect/TIP Playbooks and agents with Claude, plus JMESPath help for playbook transforms.",
+  "version": "0.4.0",
+  "description": "Build, explore, test, QA and evaluate ThreatConnect/TIP Playbooks and agents with Claude, plus JMESPath help for playbook transforms.",
   "license": "Apache-2.0",
   "author": {
     "name": "Emmet Wray",
@@ -13,6 +13,7 @@
     "agents",
     "jmespath",
     "qa",
+    "eval",
     "dataminr",
     "cyber",
     "threat intelligence"

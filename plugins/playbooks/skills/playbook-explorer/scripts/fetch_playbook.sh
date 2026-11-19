@@ -20,6 +20,10 @@
 set -euo pipefail
 
 BASE_URL="${1:?usage: fetch_playbook.sh <base_url> <env_file> <identifier> [out_dir]}"
+case "$BASE_URL" in
+  https://*|http://localhost*|http://127.0.0.1*) ;;
+  *) echo "ERROR: base_url must start with https:// (got '$BASE_URL'); the API key is sent in a header" >&2; exit 1 ;;
+esac
 ENV_FILE="${2:?usage: fetch_playbook.sh <base_url> <env_file> <identifier> [out_dir]}"
 IDENTIFIER="${3:?usage: fetch_playbook.sh <base_url> <env_file> <identifier> [out_dir]}"
 OUT_DIR="${4:-./playbook-export}"

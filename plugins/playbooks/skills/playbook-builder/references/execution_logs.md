@@ -21,6 +21,7 @@ GET /api/v3/playbook/executions?tql=playbookXid = "<groupXid>" and status = "Fai
 - The JSON field is `startTime` but the TQL field is `startedTime`; using `startTime` in TQL is a parse error.
 - **Failed executions have `failedTime` and no `completedTime`**, so a `completedTime` filter silently drops every failure. Filter on `startedTime`, `failedTime` or `status`.
 - The record has `id`, `status` (for example `Completed`, `Failed`), `playbookId`, `startTime`, `completedTime`/`failedTime`. It does **not** include the session UUID the internal API needs, and `GET /api/v3/playbook/executions/<id>` is not supported.
+- **Queue wait vs run time:** the record also carries `queueTime`. Queue wait is `startTime - queueTime` and run time is `completedTime - startTime`. Use these, not client wall-clock, when comparing latency: a busy server queues runs beyond its parallel limit (about 6 on the instance tested), so wall-clock includes waiting (observed queue waits of tens of seconds with 6 to 8 runs in flight).
 
 ## B. Get the session UUID and the steps (internal API, browser session only)
 
@@ -56,6 +57,7 @@ Tips:
 - Some JavaScript tools block output that contains URLs with query strings or cookie-like text; strip `?`, `&` and `=` from any snippet you print.
 - Keep intermediate results in a page variable (for example `window.__steps`) between calls instead of refetching. Some JavaScript tools return `{}` for an awaited async expression: start the fetch without awaiting, store the result on `window`, and read it in a second call.
 - `details/outputs` returns a bare JSON array of `{name, value}` (no `{data: [...]}` wrapper); unquote the value before measuring its length.
+- **Read the raw Knowledge an agent received.** With `logLevel` DEBUG or TRACE, a Base Agent step's `appLogs` contain a `Knowledge value: [...]` line per Knowledge item (tens of KB each) holding the exact result set passed to the model. Use it to separate a retrieval failure (the right record is absent from the set) from a generation failure (the record is present but the answer misuses it) before touching prompts or search settings.
 - Log level matters: the playbook needs `logLevel` `DEBUG` or `TRACE` for step detail (see `SKILL.md`). A run executed before a log-level change will not have it.
 - After a programmatic push and activation the Designer can show no execution data until the user disables, refreshes and re-enables (user-reported platform bug). Not tested whether the API calls above are affected; if a run you started does not appear in the list, check this before assuming it did not run.
 

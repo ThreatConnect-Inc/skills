@@ -10,3 +10,4 @@ __pycache__/
 .claude/settings.local.json
 docs/show-and-tell/
 .leak-patterns
+.skillspector-reports/
